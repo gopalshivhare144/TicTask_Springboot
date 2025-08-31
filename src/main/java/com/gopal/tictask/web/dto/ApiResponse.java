@@ -2,7 +2,7 @@ package com.gopal.tictask.web.dto;
 
 import lombok.*;
 
-
+//Standard API response wrapper to keep responses consistent.
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

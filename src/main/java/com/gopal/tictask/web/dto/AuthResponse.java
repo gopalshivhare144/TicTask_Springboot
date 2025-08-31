@@ -2,6 +2,7 @@ package com.gopal.tictask.web.dto;
 
 import lombok.Data;
 
+
 @Data
 public class AuthResponse {
     private String token;

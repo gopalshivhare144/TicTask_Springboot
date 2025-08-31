@@ -27,11 +27,13 @@ public class Task extends BaseEntity {
     private String description;
 
     @Column(name = "complete_status", nullable = false)
+    @Builder.Default
     private boolean completeStatus = false;
 
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) //Use STRING mapping — ensure DB column is varchar (or configure custom enum type)
     @Column(nullable = false)
+    @Builder.Default
     private PriorityType priority = PriorityType.MEDIUM;
     
 }

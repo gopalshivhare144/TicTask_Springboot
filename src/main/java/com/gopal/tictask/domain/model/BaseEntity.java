@@ -10,7 +10,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
-
+// Base entity to hold createdAt timestamp populated by JPA auditing.
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

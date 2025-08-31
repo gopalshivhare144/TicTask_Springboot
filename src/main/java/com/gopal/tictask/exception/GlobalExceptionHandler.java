@@ -2,12 +2,15 @@ package com.gopal.tictask.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.gopal.tictask.web.dto.ApiResponse;
 
+
+//Centralized exception handling for predictable JSON responses.
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -22,11 +25,11 @@ public class GlobalExceptionHandler {
 
     }
 
-    // @ExceptionHandler(BadCredentialsException.class)
-    // public ResponseEntity<ApiResponse<Void>> handleBadCred(BadCredentialsException ex) {
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBadCred(BadCredentialsException ex) {
 
-    //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.fail("Invalid credentials"));
-    // }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.fail("Invalid credentials"));
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiResponse<Void>> handleIllegalArg(IllegalArgumentException ex) {
@@ -36,11 +39,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGeneric(Exception ex) {
-        
+  // log the exception in real app
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.fail("Unexpected error"));
     }
-
-
     
 }

@@ -1,5 +1,7 @@
 package com.gopal.tictask.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,10 +22,12 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+     // Ensure password is not serialized to JSON in responses
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String roles = "USER";
+    @Enumerated(EnumType.STRING)
+    private Role roles;
 
 }
