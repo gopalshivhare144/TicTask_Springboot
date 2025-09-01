@@ -22,8 +22,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-     // Ensure password is not serialized to JSON in responses
-    @JsonIgnore
+    @JsonIgnore  // Ensure password is not serialized to JSON in responses
     @Column(nullable = false)
     private String password;
 

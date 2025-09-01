@@ -31,9 +31,9 @@ public class Task extends BaseEntity {
     private boolean completeStatus = false;
 
 
-    @Enumerated(EnumType.STRING) //Use STRING mapping — ensure DB column is varchar (or configure custom enum type)
+    @Enumerated(EnumType.STRING) //tells JPA how to store the enum, It will store it as a string
     @Column(nullable = false)
-    @Builder.Default
+    @Builder.Default   // @Builder ignore default value from build so we use here Builder.Default
     private PriorityType priority = PriorityType.MEDIUM;
     
 }
