@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing // enables @CreatedDate and @LastModifiedDate
+@EnableJpaAuditing // enables @CreatedDate, @LastModifiedDate, @CreatedBy, @LastModifiedBy)
 public class TictaskApplication {
 
 	public static void main(String[] args) {

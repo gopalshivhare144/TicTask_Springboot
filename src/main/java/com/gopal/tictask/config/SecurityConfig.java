@@ -1,6 +1,4 @@
 package com.gopal.tictask.config;
-
-import org.aspectj.apache.bcel.classfile.Module.Uses;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
