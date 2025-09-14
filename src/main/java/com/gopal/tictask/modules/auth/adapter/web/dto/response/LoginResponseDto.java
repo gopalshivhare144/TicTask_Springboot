@@ -3,13 +3,13 @@ package com.gopal.tictask.modules.auth.adapter.web.dto.response;
 public class LoginResponseDto {
     private Long id;
     private String email;
-    private String role;
+    private String roles;
     private String token;
 
     public LoginResponseDto(Long id, String email, String role, String token) {
         this.id = id;
         this.email = email;
-        this.role = role;
+        this.roles = role;
         this.token = token;
     }
 
@@ -19,8 +19,8 @@ public class LoginResponseDto {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public String getRole() { return roles; }
+    public void setRole(String role) { this.roles = role; }
 
     public String getToken() { return token; }
     public void setToken(String token) { this.token = token; }
