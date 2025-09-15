@@ -3,9 +3,8 @@ package com.gopal.tictask.modules.auth.adapter.persistence;
 import org.springframework.stereotype.Component;
 
 import com.gopal.tictask.modules.auth.adapter.mapper.UserMapper;
-import com.gopal.tictask.modules.auth.adapter.persistence.entity.UserEntity;
 import com.gopal.tictask.modules.auth.adapter.persistence.repository.UserJpaRepository;
-import com.gopal.tictask.modules.auth.application.port.UserRepositoryPort;
+import com.gopal.tictask.modules.auth.application.port.outbound.UserRepositoryPort;
 import com.gopal.tictask.modules.auth.domain.model.User;
 
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
 
     @Override
     public User save(User user) {
-        UserEntity saved = userJpaRepository.save(userMapper.toEntity(user));
+        User saved = userJpaRepository.save(userMapper.toEntity(user));
         return userMapper.toDomain(saved);
     }
 }

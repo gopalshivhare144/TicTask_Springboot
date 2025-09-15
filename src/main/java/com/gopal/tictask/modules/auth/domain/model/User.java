@@ -1,43 +1,26 @@
 package com.gopal.tictask.modules.auth.domain.model;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
-    private Role roles;
 
-    public User(Long id, String email, String password, Role roles) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role roles = Role.USER;
 
-    public Long getId() { return id; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
-
-    public Role getRoles() {
-        return roles;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRoles(Role roles) {
-        this.roles = roles;
-    }
-    
-
-
-    
 }

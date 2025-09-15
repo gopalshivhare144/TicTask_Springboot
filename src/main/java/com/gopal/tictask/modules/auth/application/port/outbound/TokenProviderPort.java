@@ -1,4 +1,4 @@
-package com.gopal.tictask.modules.auth.application.port;
+package com.gopal.tictask.modules.auth.application.port.outbound;
 
 import com.gopal.tictask.modules.auth.domain.model.User;
 

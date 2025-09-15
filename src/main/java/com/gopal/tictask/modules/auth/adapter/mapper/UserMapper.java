@@ -1,11 +1,8 @@
 package com.gopal.tictask.modules.auth.adapter.mapper;
 
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import com.gopal.tictask.modules.auth.adapter.persistence.entity.UserEntity;
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.SignupRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.response.LoginResponseDto;
 import com.gopal.tictask.modules.auth.domain.model.User;
@@ -22,12 +19,17 @@ public interface UserMapper {
     User signupRequestToDomain(SignupRequest dto);
 
     // Domain User -> Persistence Entity
-    UserEntity toEntity(User domain);
+    User toEntity(User domain);
 
     // Persistence Entity -> Domain User
-    User toDomain(UserEntity entity);
+    User toDomain(User entity);
 
-    // Domain User -> LoginResponseDto (token is handled separately)
+    // Domain User -> LoginResponseDto (token is handled separately)    
+    // Domain User -> LoginResponseDto
+    // We ignore token (set in service) but map role -> role (MapStruct will map
+    // enum->String via name())
+
     @Mapping(target = "token", ignore = true)
     LoginResponseDto toLoginResponse(User domain);
+
 }

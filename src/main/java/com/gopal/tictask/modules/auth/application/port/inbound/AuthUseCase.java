@@ -1,10 +1,12 @@
-package com.gopal.tictask.modules.auth.application.port;
+package com.gopal.tictask.modules.auth.application.port.inbound;
 
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.LoginRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.SignupRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.response.LoginResponseDto;
+import com.gopal.tictask.shared.api.ApiResponse;
 
 public interface AuthUseCase {
-    void signup(SignupRequest request);
-    LoginResponseDto login(LoginRequest request);
+    ApiResponse<String> signup(SignupRequest request);
+   
+    ApiResponse<LoginResponseDto>login(LoginRequest request);
 }

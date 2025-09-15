@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.gopal.tictask.modules.auth.application.port.TokenProviderPort;
+import com.gopal.tictask.modules.auth.application.port.outbound.TokenProviderPort;
 import com.gopal.tictask.modules.auth.domain.model.User;
 
 import java.util.Date;

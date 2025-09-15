@@ -1,32 +1,32 @@
 package com.gopal.tictask.modules.auth.application.service;
-
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.gopal.tictask.modules.auth.adapter.mapper.UserMapper;
+import com.gopal.tictask.modules.auth.adapter.security.BCryptPasswordEncoderService;
 import com.gopal.tictask.modules.auth.adapter.security.JwtTokenProvider;
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.LoginRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.SignupRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.response.LoginResponseDto;
-import com.gopal.tictask.modules.auth.application.port.AuthUseCase;
-import com.gopal.tictask.modules.auth.application.port.UserRepositoryPort;
+import com.gopal.tictask.modules.auth.application.port.inbound.AuthUseCase;
+import com.gopal.tictask.modules.auth.application.port.outbound.UserRepositoryPort;
 import com.gopal.tictask.modules.auth.domain.exceptions.InvalidCredentialsException;
 import com.gopal.tictask.modules.auth.domain.exceptions.UserAlreadyExistsException;
 import com.gopal.tictask.modules.auth.domain.exceptions.UserNotFoundException;
 import com.gopal.tictask.modules.auth.domain.model.User;
-import com.gopal.tictask.modules.auth.domain.service.PasswordEncryptionService;
+import com.gopal.tictask.shared.api.ApiResponse;
+
 import java.util.Optional;
 
-@Service
+
 @Transactional
 public class AuthServiceImpl implements AuthUseCase {
     private final UserRepositoryPort userRepository;
     private final JwtTokenProvider jwtTokenProvider;
-    private final PasswordEncryptionService passwordEncoder;
+    private final BCryptPasswordEncoderService passwordEncoder;
     private final UserMapper userMapper;
 
     public AuthServiceImpl(UserRepositoryPort userRepository,
             JwtTokenProvider jwtTokenProvider,
-            PasswordEncryptionService passwordEncoder,
+            BCryptPasswordEncoderService passwordEncoder,
             UserMapper userMapper) {
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -35,7 +35,7 @@ public class AuthServiceImpl implements AuthUseCase {
     }
 
     @Override
-    public void signup(SignupRequest request) {
+    public ApiResponse<String> signup(SignupRequest request) {
         Optional<User> existing = userRepository.findByEmail(request.getEmail());
         if (existing.isPresent()) {
             throw new UserAlreadyExistsException(request.getEmail());
@@ -50,6 +50,7 @@ public class AuthServiceImpl implements AuthUseCase {
 
         // Save (Domain → Entity handled in repo)
         userRepository.save(user);
+        return ApiResponse.success("User registered successfully");
 
         // without mapper code
         // User newUser = new User(
@@ -62,7 +63,7 @@ public class AuthServiceImpl implements AuthUseCase {
     }
 
     @Override
-    public LoginResponseDto login(LoginRequest request) {
+    public ApiResponse<LoginResponseDto> login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UserNotFoundException(request.getEmail()));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
@@ -72,7 +73,7 @@ public class AuthServiceImpl implements AuthUseCase {
         // Map Domain → Response DTO
         LoginResponseDto response = userMapper.toLoginResponse(user);
         response.setToken(jwtTokenProvider.generateToken(user));
-        return response;
+        return ApiResponse.success("Login successfully", response);
 
         // String token = tokenProvider.generateToken(user);
         // return new LoginResponseDto(user.getId(), user.getEmail(),

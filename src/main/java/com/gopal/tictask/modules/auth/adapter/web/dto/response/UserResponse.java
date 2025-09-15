@@ -1,17 +1,18 @@
 package com.gopal.tictask.modules.auth.adapter.web.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserResponse {
     private Long id;
     private String email;
     private String roles;
 
-    public UserResponse(Long id, String email, String roles) {
-        this.id = id;
-        this.email = email;
-        this.roles = roles;
-    }
-
-    public Long getId() { return id; }
-    public String getEmail() { return email; }
-    public String getRoles() { return roles; }
+  
 }
