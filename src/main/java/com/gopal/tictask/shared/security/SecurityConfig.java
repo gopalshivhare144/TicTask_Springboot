@@ -1,4 +1,4 @@
-package com.gopal.tictask.infrastructure.config;
+package com.gopal.tictask.shared.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

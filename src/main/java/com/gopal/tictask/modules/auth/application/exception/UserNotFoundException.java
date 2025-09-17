@@ -1,4 +1,4 @@
-package com.gopal.tictask.modules.auth.domain.exceptions;
+package com.gopal.tictask.modules.auth.application.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String email) {

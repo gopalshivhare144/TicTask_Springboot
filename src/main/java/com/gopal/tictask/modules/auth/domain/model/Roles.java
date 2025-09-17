@@ -1,6 +1,6 @@
 package com.gopal.tictask.modules.auth.domain.model;
 
-public enum Role {
+public enum Roles {
     USER,
     ADMIN
 }

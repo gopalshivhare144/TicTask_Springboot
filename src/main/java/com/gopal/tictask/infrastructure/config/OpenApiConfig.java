@@ -12,8 +12,8 @@ public class OpenApiConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Clean Architecture API")
+                        .title("TicTask API")
                         .version("1.0.0")
-                        .description("Demo project with modular clean architecture"));
+                        .description("Task and consistency tracker"));
     }
 }

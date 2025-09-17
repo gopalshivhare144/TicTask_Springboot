@@ -1,4 +1,4 @@
-package com.gopal.tictask.modules.auth.adapter.security;
+package com.gopal.tictask.shared.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

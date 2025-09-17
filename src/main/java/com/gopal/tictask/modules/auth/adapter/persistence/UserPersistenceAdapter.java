@@ -2,32 +2,34 @@ package com.gopal.tictask.modules.auth.adapter.persistence;
 
 import org.springframework.stereotype.Component;
 
-import com.gopal.tictask.modules.auth.adapter.mapper.UserMapper;
+import com.gopal.tictask.modules.auth.adapter.mapper.UserEntityMapper;
+import com.gopal.tictask.modules.auth.adapter.persistence.entity.UserEntity;
 import com.gopal.tictask.modules.auth.adapter.persistence.repository.UserJpaRepository;
 import com.gopal.tictask.modules.auth.application.port.outbound.UserRepositoryPort;
 import com.gopal.tictask.modules.auth.domain.model.User;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class UserPersistenceAdapter implements UserRepositoryPort {
 
     private final UserJpaRepository userJpaRepository;
-    private final UserMapper userMapper;
-
-    public UserPersistenceAdapter(UserJpaRepository userJpaRepository, UserMapper userMapper) {
-        this.userJpaRepository = userJpaRepository;
-        this.userMapper = userMapper;
-    }
+    private final UserEntityMapper userEntityMapper;
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userJpaRepository.findByEmail(email).map(userMapper::toDomain);
+        return userJpaRepository.findByEmail(email).map(userEntityMapper::toDomain);  //convert UserEntity to domain
     }
 
     @Override
     public User save(User user) {
-        User saved = userJpaRepository.save(userMapper.toEntity(user));
-        return userMapper.toDomain(saved);
+        UserEntity saved = userJpaRepository.save(userEntityMapper.toEntity(user));
+        //domain object converted into persistence object (UserEntity)
+        return userEntityMapper.toDomain(saved);
+        // convert back into a domain object to return to the service/usecase layer
+
     }
 }

@@ -1,4 +1,4 @@
-package com.gopal.tictask.infrastructure.exception;
+package com.gopal.tictask.shared.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.gopal.tictask.modules.auth.domain.exceptions.InvalidCredentialsException;
-import com.gopal.tictask.modules.auth.domain.exceptions.UserAlreadyExistsException;
-import com.gopal.tictask.modules.auth.domain.exceptions.UserNotFoundException;
+import com.gopal.tictask.modules.auth.application.exception.InvalidCredentialsException;
+import com.gopal.tictask.modules.auth.application.exception.UserAlreadyExistsException;
+import com.gopal.tictask.modules.auth.application.exception.UserNotFoundException;
 import com.gopal.tictask.shared.api.ApiResponse;
 
 @ControllerAdvice

@@ -1,4 +1,4 @@
-package com.gopal.tictask.modules.auth.adapter.security;
+package com.gopal.tictask.shared.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

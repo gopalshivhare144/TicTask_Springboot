@@ -14,21 +14,20 @@ import com.gopal.tictask.shared.api.ApiResponse;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthUseCase authService;
+    private final AuthUseCase authUseCase;
 
-    public AuthController(AuthUseCase authService) {
-        this.authService = authService;
+    public AuthController(AuthUseCase authUseCase) {
+        this.authUseCase = authUseCase;
     }
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<String>> signup(@Valid @RequestBody SignupRequest request) {
-        ApiResponse<String> response = authService.signup(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(authUseCase.signup(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponseDto>> login(@Valid @RequestBody LoginRequest request) {
-        ApiResponse<LoginResponseDto> response = authService.login(request);
-        return ResponseEntity.ok(response);
+      
+        return ResponseEntity.ok(authUseCase.login(request));
     }
 }

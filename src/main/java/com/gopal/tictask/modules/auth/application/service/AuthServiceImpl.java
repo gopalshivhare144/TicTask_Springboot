@@ -1,38 +1,33 @@
 package com.gopal.tictask.modules.auth.application.service;
 import org.springframework.transaction.annotation.Transactional;
-import com.gopal.tictask.modules.auth.adapter.mapper.UserMapper;
-import com.gopal.tictask.modules.auth.adapter.security.BCryptPasswordEncoderService;
-import com.gopal.tictask.modules.auth.adapter.security.JwtTokenProvider;
+
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.LoginRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.request.SignupRequest;
 import com.gopal.tictask.modules.auth.adapter.web.dto.response.LoginResponseDto;
+import com.gopal.tictask.modules.auth.adapter.web.mapper.UserWebMapper;
+import com.gopal.tictask.modules.auth.application.exception.InvalidCredentialsException;
+import com.gopal.tictask.modules.auth.application.exception.UserAlreadyExistsException;
+import com.gopal.tictask.modules.auth.application.exception.UserNotFoundException;
 import com.gopal.tictask.modules.auth.application.port.inbound.AuthUseCase;
 import com.gopal.tictask.modules.auth.application.port.outbound.UserRepositoryPort;
-import com.gopal.tictask.modules.auth.domain.exceptions.InvalidCredentialsException;
-import com.gopal.tictask.modules.auth.domain.exceptions.UserAlreadyExistsException;
-import com.gopal.tictask.modules.auth.domain.exceptions.UserNotFoundException;
 import com.gopal.tictask.modules.auth.domain.model.User;
 import com.gopal.tictask.shared.api.ApiResponse;
+import com.gopal.tictask.shared.security.BCryptPasswordEncoderService;
+import com.gopal.tictask.shared.security.JwtTokenProvider;
+
+import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 
 
 @Transactional
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthUseCase {
     private final UserRepositoryPort userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final BCryptPasswordEncoderService passwordEncoder;
-    private final UserMapper userMapper;
+    private final UserWebMapper userWebMapper;
 
-    public AuthServiceImpl(UserRepositoryPort userRepository,
-            JwtTokenProvider jwtTokenProvider,
-            BCryptPasswordEncoderService passwordEncoder,
-            UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-    }
 
     @Override
     public ApiResponse<String> signup(SignupRequest request) {
@@ -42,7 +37,7 @@ public class AuthServiceImpl implements AuthUseCase {
         }
 
         // Map DTO → Domain
-        User user = userMapper.signupRequestToDomain(request);
+        User user = userWebMapper.signupRequestToDomain(request);
 
         // Encode password before saving
 
@@ -52,14 +47,16 @@ public class AuthServiceImpl implements AuthUseCase {
         userRepository.save(user);
         return ApiResponse.success("User registered successfully");
 
-        // without mapper code
-        // User newUser = new User(
-        // null,
-        // request.getEmail(),
-        // passwordEncoder.encrypt(request.getPassword()),
-        // Role.USER
-        // );
-        // userRepository.save(newUser);
+        // without mapper code, this is new code need to check with chatgpt
+
+        // User user = new User(null,
+        //         request.getEmail(),
+        //         passwordEncoder.encode(request.getPassword()),
+        //         Role.USER);
+
+        // userRepository.save(user);
+        // return ApiResponse.success("User registered successfully");
+
     }
 
     @Override
@@ -71,8 +68,10 @@ public class AuthServiceImpl implements AuthUseCase {
         }
 
         // Map Domain → Response DTO
-        LoginResponseDto response = userMapper.toLoginResponse(user);
+        LoginResponseDto response = userWebMapper.toLoginResponse(user);
+
         response.setToken(jwtTokenProvider.generateToken(user));
+
         return ApiResponse.success("Login successfully", response);
 
         // String token = tokenProvider.generateToken(user);
