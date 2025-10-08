@@ -2,10 +2,7 @@ package com.gopal.tictask.shared.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor

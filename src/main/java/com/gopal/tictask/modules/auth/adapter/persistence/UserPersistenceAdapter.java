@@ -21,7 +21,23 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userJpaRepository.findByEmail(email).map(userEntityMapper::toDomain);  //convert UserEntity to domain
+        return userJpaRepository.findByEmail(email).map(userEntityMapper::toDomain); //convert UserEntity to domain
+
+        // Optional<UserEntity> userEntityOpt = userJpaRepository.findByEmail(email);
+
+        // if (userEntityOpt.isPresent()) {
+        //     UserEntity userEntity = userEntityOpt.get();
+        //     User user = userEntityMapper.toDomain(userEntity);
+        //     return Optional.of(user);
+        // } else {
+        //     return Optional.empty();
+        // }
+
+    }
+    
+    @Override
+    public Optional<User> findById(Long id) {
+        return userJpaRepository.findById(id).map(userEntityMapper::toDomain); 
     }
 
     @Override

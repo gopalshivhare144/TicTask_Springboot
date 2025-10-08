@@ -22,6 +22,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<String>> signup(@Valid @RequestBody SignupRequest request) {
+        System.out.println("AuthSection ====>request " + request.toString());
         return ResponseEntity.ok(authUseCase.signup(request));
     }
 
