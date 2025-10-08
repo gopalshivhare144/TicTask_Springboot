@@ -1,6 +1,7 @@
 package com.gopal.tictask.modules.task.adapter.persistence.entity;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -46,5 +47,8 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TaskPriority priority;
+
+    @Column(nullable = false)
+    private LocalDate taskDate;
 
 }

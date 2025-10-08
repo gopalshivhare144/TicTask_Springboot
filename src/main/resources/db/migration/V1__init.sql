@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   title varchar(255) NOT NULL,
   description text,
   completed boolean NOT NULL DEFAULT false,
+  task_date DATE NOT NULL DEFAULT CURRENT_DATE;
   priority_type varchar(10) NOT NULL,
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamptz DEFAULT CURRENT_TIMESTAMP

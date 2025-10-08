@@ -46,7 +46,7 @@ public class AuthController {
         response.setToken(jwtTokenProvider.generateToken(user));
         
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(ApiResponse.success("User Login Successfully", response));
     }
 }

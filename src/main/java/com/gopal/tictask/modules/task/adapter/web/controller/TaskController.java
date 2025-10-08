@@ -1,8 +1,12 @@
 package com.gopal.tictask.modules.task.adapter.web.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +25,13 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/tasks")
 @RequiredArgsConstructor
 public class TaskController {
+
     private final TaskUseCase taskService;
     private final TaskWebMapper taskWebMapper;
 
     @PostMapping
     public ResponseEntity<ApiResponse<TaskResponseDto>> createTask(@Valid @RequestBody TaskRequestDto request) {
+
         Task task = taskWebMapper.toDomain(request);
         Task created = taskService.createTask(task);
         TaskResponseDto response = taskWebMapper.toResponseDto(created);
@@ -41,7 +47,7 @@ public class TaskController {
         Task updated = taskService.updateTask(id, taskWebMapper.toDomain(request));
         TaskResponseDto response = taskWebMapper.toResponseDto(updated);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(ApiResponse.success("Task updated successfully", response));
     }
 
@@ -49,7 +55,7 @@ public class TaskController {
     public ResponseEntity<ApiResponse<Void>> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(ApiResponse.success("Task deleted successfully"));
     }
 
@@ -58,7 +64,7 @@ public class TaskController {
         Task task = taskService.getTask(id);
         TaskResponseDto response = taskWebMapper.toResponseDto(task);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(ApiResponse.success("Task featch successfully", response));
     }
 
@@ -72,7 +78,7 @@ public class TaskController {
         Page<TaskResponseDto> dtoPage = tasks.map(taskWebMapper::toResponseDto);
         PagedResponseDto<TaskResponseDto> response = PagedResponseDto.fromPage(dtoPage);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(ApiResponse.success("Task featch successfully", response));
 
     }
@@ -81,13 +87,32 @@ public class TaskController {
     public ResponseEntity<ApiResponse<PagedResponseDto<TaskResponseDto>>> searchTasks(
             @RequestParam String title,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Task> tasks = taskService.searchTask(title, pageable);
-        Page<TaskResponseDto> dtoPage = tasks.map(taskWebMapper::toResponseDto);
-        PagedResponseDto<TaskResponseDto> response = PagedResponseDto.fromPage(dtoPage);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(ApiResponse.success("Task featch successfully", response));
+                    @RequestParam(defaultValue = "10") int size) {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Task> tasks = taskService.searchTask(title, pageable);
+            Page<TaskResponseDto> dtoPage = tasks.map(taskWebMapper::toResponseDto);
+            PagedResponseDto<TaskResponseDto> response = PagedResponseDto.fromPage(dtoPage);
+            return ResponseEntity
+                            .status(HttpStatus.OK)
+                            .body(ApiResponse.success("Task featch successfully", response));
     }
+    
+    @GetMapping("/by-date")
+    public ResponseEntity<ApiResponse<List<TaskResponseDto>>> getTasksByDate(
+                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate taskDate) {
+
+            List<Task> tasks = taskService.getTasksByDate(taskDate);
+            List<TaskResponseDto> responseList = tasks.stream()
+                            .map(taskWebMapper::toResponseDto)
+                            .toList();
+
+            return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(ApiResponse.success("Task featch successfully", responseList));
+    }
+
+
+
+
+
 }

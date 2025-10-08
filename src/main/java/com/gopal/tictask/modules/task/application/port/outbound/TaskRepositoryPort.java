@@ -1,5 +1,7 @@
 package com.gopal.tictask.modules.task.application.port.outbound;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -18,5 +20,7 @@ public interface TaskRepositoryPort {
     Page<Task> findAll(Pageable pageable);
 
     Page<Task> searchByTitle(String title, Pageable pageable);
+
+    List<Task> findByTaskDate(LocalDate taskDate); 
     
 } 

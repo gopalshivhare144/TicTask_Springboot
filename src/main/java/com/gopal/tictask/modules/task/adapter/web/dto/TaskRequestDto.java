@@ -1,5 +1,7 @@
 package com.gopal.tictask.modules.task.adapter.web.dto;
 
+import java.time.LocalDate;
+
 import com.gopal.tictask.modules.task.domain.model.TaskPriority;
 
 import jakarta.validation.constraints.NotBlank;
@@ -25,4 +27,6 @@ public class TaskRequestDto {
 
     @Builder.Default
     private Boolean completed = false;
+
+    private LocalDate taskDate;
 }

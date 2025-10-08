@@ -1,5 +1,7 @@
 package com.gopal.tictask.modules.task.adapter.persistence;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -46,4 +48,13 @@ public class TaskPersistenceAdapter implements TaskRepositoryPort {
     public Page<Task> searchByTitle(String title, Pageable pageable) {
         return springDataTaskRepository.searchByTitle(title, pageable).map(mapper::toDomain);
     }
+
+   @Override
+    public List<Task> findByTaskDate(LocalDate taskDate) {
+        return springDataTaskRepository.findByTaskDate(taskDate)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
 }

@@ -1,5 +1,8 @@
 package com.gopal.tictask.modules.task.application.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;    
 import org.springframework.stereotype.Service;
@@ -64,6 +67,11 @@ public class TaskServiceImpl implements TaskUseCase {
         if (task.getTitle() == null || task.getTitle().trim().isEmpty()) {
             throw new ValidationException("Title must not be empty");
         }
+    }
+
+    @Override
+    public List<Task> getTasksByDate(LocalDate taskDate) {
+        return taskRepositoryPort.findByTaskDate(taskDate);
     }
     
 }
