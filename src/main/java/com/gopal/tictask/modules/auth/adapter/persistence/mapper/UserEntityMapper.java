@@ -1,4 +1,4 @@
-package com.gopal.tictask.modules.auth.adapter.mapper;
+package com.gopal.tictask.modules.auth.adapter.persistence.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

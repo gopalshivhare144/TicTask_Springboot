@@ -16,8 +16,7 @@ import lombok.*;
         @Index(name = "idx_tasks_title", columnList = "title"),
         @Index(name = "idx_tasks_created_at", columnList = "created_at")
 })
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

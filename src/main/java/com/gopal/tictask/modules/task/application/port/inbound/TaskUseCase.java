@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.gopal.tictask.modules.task.domain.model.Task;
 
-public interface TaskService {
+public interface TaskUseCase {
 
     Task createTask(Task task);
 

@@ -1,12 +1,12 @@
 package com.gopal.tictask.modules.auth.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.Instant;
+
+import lombok.*;
 
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class User {
    
@@ -17,5 +17,7 @@ public class User {
     private String password;
 
     private Roles roles = Roles.USER;
+
+    private Instant createdAt;
 
 }

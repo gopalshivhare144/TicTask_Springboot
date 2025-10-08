@@ -1,10 +1,8 @@
 package com.gopal.tictask.modules.auth.adapter.web.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 public class LoginResponseDto {
     private Long id;
     private String email;

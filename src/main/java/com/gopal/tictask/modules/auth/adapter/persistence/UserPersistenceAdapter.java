@@ -2,8 +2,8 @@ package com.gopal.tictask.modules.auth.adapter.persistence;
 
 import org.springframework.stereotype.Component;
 
-import com.gopal.tictask.modules.auth.adapter.mapper.UserEntityMapper;
 import com.gopal.tictask.modules.auth.adapter.persistence.entity.UserEntity;
+import com.gopal.tictask.modules.auth.adapter.persistence.mapper.UserEntityMapper;
 import com.gopal.tictask.modules.auth.adapter.persistence.repository.UserJpaRepository;
 import com.gopal.tictask.modules.auth.application.port.outbound.UserRepositoryPort;
 import com.gopal.tictask.modules.auth.domain.model.User;
@@ -23,6 +23,7 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
     public Optional<User> findByEmail(String email) {
         return userJpaRepository.findByEmail(email).map(userEntityMapper::toDomain); //convert UserEntity to domain
 
+        
         // Optional<UserEntity> userEntityOpt = userJpaRepository.findByEmail(email);
 
         // if (userEntityOpt.isPresent()) {
@@ -43,9 +44,7 @@ public class UserPersistenceAdapter implements UserRepositoryPort {
     @Override
     public User save(User user) {
         UserEntity saved = userJpaRepository.save(userEntityMapper.toEntity(user));
-        //domain object converted into persistence object (UserEntity)
         return userEntityMapper.toDomain(saved);
-        // convert back into a domain object to return to the service/usecase layer
 
     }
 }

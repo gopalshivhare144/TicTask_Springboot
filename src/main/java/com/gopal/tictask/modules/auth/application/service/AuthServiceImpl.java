@@ -1,44 +1,42 @@
 package com.gopal.tictask.modules.auth.application.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gopal.tictask.infrastructure.security.BCryptPasswordEncoderService;
-import com.gopal.tictask.infrastructure.security.JwtServiceImpl;
-import com.gopal.tictask.modules.auth.adapter.web.dto.request.LoginRequest;
-import com.gopal.tictask.modules.auth.adapter.web.dto.request.SignupRequest;
-import com.gopal.tictask.modules.auth.adapter.web.dto.response.LoginResponseDto;
-import com.gopal.tictask.modules.auth.adapter.web.mapper.UserWebMapper;
 import com.gopal.tictask.modules.auth.application.exception.InvalidCredentialsException;
 import com.gopal.tictask.modules.auth.application.exception.UserAlreadyExistsException;
 import com.gopal.tictask.modules.auth.application.exception.UserNotFoundException;
 import com.gopal.tictask.modules.auth.application.port.inbound.AuthUseCase;
 import com.gopal.tictask.modules.auth.application.port.outbound.UserRepositoryPort;
+import com.gopal.tictask.modules.auth.domain.model.Roles;
 import com.gopal.tictask.modules.auth.domain.model.User;
-import com.gopal.tictask.shared.api.ApiResponse;
 
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 
+@Service
 @Transactional
 @AllArgsConstructor
 public class AuthServiceImpl implements AuthUseCase {
     private final UserRepositoryPort userRepository;
-    private final JwtServiceImpl jwtTokenProvider;
+    //private final JwtServiceImpl jwtTokenProvider;
     private final BCryptPasswordEncoderService passwordEncoder;
-    private final UserWebMapper userWebMapper;
+    //private final UserWebMapper userWebMapper;
 
     @Override
-    public ApiResponse<String> signup(SignupRequest request) {
+    public void signup(User user) {
 
-        Optional<User> existing = userRepository.findByEmail(request.getEmail());
+        Optional<User> existing = userRepository.findByEmail(user.getEmail());
         if (existing.isPresent()) {
-            throw new UserAlreadyExistsException(request.getEmail());
+            throw new UserAlreadyExistsException(user.getEmail());
         }
-        User user = userWebMapper.signupRequestToDomain(request);
-        user.setPassword(passwordEncoder.encrypt(request.getPassword()));
+       // User signUpRequest = userWebMapper.signupRequestToDomain(user);
+        user.setPassword(passwordEncoder.encrypt(user.getPassword()));
+        user.setRoles(Roles.USER);
         userRepository.save(user);
-        return ApiResponse.success("User registered successfully");
+        
 
         // without mapper code
         // User user = new User(null,
@@ -52,19 +50,19 @@ public class AuthServiceImpl implements AuthUseCase {
     }
 
     @Override
-    public ApiResponse<LoginResponseDto> login(LoginRequest request) {
+    public User login(User user) {
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UserNotFoundException(request.getEmail()));
+        User isUserAvailable = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(user.getEmail()));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(user.getPassword(), isUserAvailable.getPassword())) {
             throw new InvalidCredentialsException();
         }
 
-        LoginResponseDto response = userWebMapper.toLoginResponseDto(user);
+        //LoginResponseDto response = userWebMapper.toLoginResponseDto(user);
 
-        response.setToken(jwtTokenProvider.generateToken(user));
+        //response.setToken(jwtTokenProvider.generateToken(user));
 
-        return ApiResponse.success("Login successfully", response);
+        return isUserAvailable;
     }
 }

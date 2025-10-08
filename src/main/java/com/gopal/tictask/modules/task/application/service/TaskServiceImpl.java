@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;    
 import org.springframework.stereotype.Service;
 
-import com.gopal.tictask.modules.task.application.port.inbound.TaskService;
+import com.gopal.tictask.modules.task.application.port.inbound.TaskUseCase;
 import com.gopal.tictask.modules.task.application.port.outbound.TaskRepositoryPort;
 import com.gopal.tictask.modules.task.domain.model.Task;
 import com.gopal.tictask.shared.exception.NotFoundException;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class TaskServiceImpl implements TaskService {
+public class TaskServiceImpl implements TaskUseCase {
 
     private final TaskRepositoryPort taskRepositoryPort;
     

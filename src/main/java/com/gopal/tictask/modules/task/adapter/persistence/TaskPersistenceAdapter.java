@@ -22,11 +22,8 @@ public class TaskPersistenceAdapter implements TaskRepositoryPort {
 
     @Override
     public Task save(Task task) {
-        System.out.println("TaskPersistenceAdpter ====>task " + task);
         TaskEntity entity = mapper.toEntity(task);
-        System.out.println("TaskPersistenceAdpter ====>entity " + entity);
         TaskEntity saved = springDataTaskRepository.save(entity);
-        System.out.println("TaskPersistenceAdpter ====>saved "+ saved);
         return mapper.toDomain(saved);
     }
 

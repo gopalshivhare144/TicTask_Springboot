@@ -1,11 +1,9 @@
 package com.gopal.tictask.modules.auth.adapter.web.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 public class LoginRequest {
     @NotBlank
     private String email;

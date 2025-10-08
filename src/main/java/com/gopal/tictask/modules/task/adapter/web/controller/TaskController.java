@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.gopal.tictask.modules.task.adapter.web.dto.TaskRequestDto;
 import com.gopal.tictask.modules.task.adapter.web.dto.TaskResponseDto;
 import com.gopal.tictask.modules.task.adapter.web.mapper.TaskWebMapper;
-import com.gopal.tictask.modules.task.application.port.inbound.TaskService;
+import com.gopal.tictask.modules.task.application.port.inbound.TaskUseCase;
 import com.gopal.tictask.modules.task.domain.model.Task;
 import com.gopal.tictask.shared.api.ApiResponse;
 import com.gopal.tictask.shared.api.PagedResponseDto;
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/tasks")
 @RequiredArgsConstructor
 public class TaskController {
-    private final TaskService taskService;
+    private final TaskUseCase taskService;
     private final TaskWebMapper taskWebMapper;
 
     @PostMapping
