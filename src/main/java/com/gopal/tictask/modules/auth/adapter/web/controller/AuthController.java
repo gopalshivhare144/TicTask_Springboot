@@ -43,7 +43,7 @@ public class AuthController {
         User created = authUseCase.login(user);
 
         LoginResponseDto response = userWebMapper.toLoginResponseDto(created);
-        response.setToken(jwtTokenProvider.generateToken(user));
+        response.setToken(jwtTokenProvider.generateToken(created));
         
         return ResponseEntity
                 .status(HttpStatus.OK)

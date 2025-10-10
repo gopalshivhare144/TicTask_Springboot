@@ -22,6 +22,6 @@ public interface TaskUseCase {
 
     Page<Task> searchTask(String title, Pageable pageable);
 
-    List<Task> getTasksByDate(LocalDate taskDate); 
+    List<Task> getTasksByDate(LocalDate taskDate);
     
 } 

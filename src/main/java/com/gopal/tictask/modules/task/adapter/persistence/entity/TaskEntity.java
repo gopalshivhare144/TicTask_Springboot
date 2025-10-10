@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import com.gopal.tictask.modules.task.domain.model.TaskPriority;
 
 import jakarta.persistence.*;
@@ -27,6 +26,9 @@ public class TaskEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
     @Column(nullable = false)
     private String title;
 
@@ -45,7 +47,7 @@ public class TaskEntity {
     private boolean completed;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name= "priority_type",nullable = false)
     private TaskPriority priority;
 
     @Column(nullable = false)

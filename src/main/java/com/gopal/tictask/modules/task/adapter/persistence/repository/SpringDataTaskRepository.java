@@ -13,9 +13,12 @@ import com.gopal.tictask.modules.task.adapter.persistence.entity.TaskEntity;
 
 public interface SpringDataTaskRepository extends JpaRepository<TaskEntity, Long> {
 
-    @Query("select t from TaskEntity t where lower(t.title) like lower(concat('%', :title, '%'))")
-    Page<TaskEntity> searchByTitle(@Param("title") String title, Pageable pageable);
+    Page<TaskEntity> findByUserId(Long userId, Pageable pageable);
 
-    List<TaskEntity> findByTaskDate(LocalDate taskDate);
+    @Query("select t from TaskEntity t where lower(t.title) like lower(concat('%', :title, '%')) and t.userId = :userId")
+    Page<TaskEntity> searchByTitleAndUserId(@Param("title") String title, @Param("userId") Long userId,
+            Pageable pageable);
+
+    List<TaskEntity> findByTaskDateAndUserId(LocalDate taskDate, Long userId);
     
 }    

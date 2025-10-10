@@ -17,10 +17,10 @@ public interface TaskRepositoryPort {
 
     void deleteByid(Long id);
 
-    Page<Task> findAll(Pageable pageable);
+    Page<Task> findByUserId(Long userId, Pageable pageable);
 
-    Page<Task> searchByTitle(String title, Pageable pageable);
+    Page<Task> searchByTitleAndUserId(String title, Long userId, Pageable pageable);
 
-    List<Task> findByTaskDate(LocalDate taskDate); 
+    List<Task> findByTaskDateAndUserId(LocalDate taskDate, Long userId);
     
 } 

@@ -10,4 +10,8 @@ public interface TokenServicePort {
     String extractUsername(String token);
 
     boolean isTokenValid(String token, UserDetails userDetails);
+
+    Long extractUserId(String token);
+
+    String extractRole(String token);
 }

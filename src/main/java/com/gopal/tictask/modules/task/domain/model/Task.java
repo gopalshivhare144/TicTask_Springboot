@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Task {
     private Long id;
+    private Long userId;
     private String title;
     private String description;
     private LocalDate taskDate;

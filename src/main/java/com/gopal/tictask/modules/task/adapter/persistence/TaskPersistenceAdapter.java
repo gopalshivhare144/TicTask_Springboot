@@ -40,21 +40,20 @@ public class TaskPersistenceAdapter implements TaskRepositoryPort {
     }
 
     @Override
-    public Page<Task> findAll(Pageable pageable) {
-        return springDataTaskRepository.findAll(pageable).map(mapper::toDomain);
+    public Page<Task> findByUserId(Long userId, Pageable pageable) {
+        return springDataTaskRepository.findByUserId(userId, pageable)
+                .map(mapper::toDomain);
     }
 
     @Override
-    public Page<Task> searchByTitle(String title, Pageable pageable) {
-        return springDataTaskRepository.searchByTitle(title, pageable).map(mapper::toDomain);
+    public Page<Task> searchByTitleAndUserId(String title, Long userId, Pageable pageable) {
+        return springDataTaskRepository.searchByTitleAndUserId(title, userId, pageable)
+                .map(mapper::toDomain);
     }
 
-   @Override
-    public List<Task> findByTaskDate(LocalDate taskDate) {
-        return springDataTaskRepository.findByTaskDate(taskDate)
-                .stream()
-                .map(mapper::toDomain)
-                .toList();
+    @Override
+    public List<Task> findByTaskDateAndUserId(LocalDate taskDate, Long userId) {
+        return springDataTaskRepository.findByTaskDateAndUserId(taskDate, userId)
+                .stream().map(mapper::toDomain).toList();
     }
-
 }

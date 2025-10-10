@@ -6,16 +6,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.gopal.tictask.modules.auth.domain.model.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
-
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -29,7 +30,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail(); // ✅ use email as username
+        return user.getEmail(); // 
     }
 
     @Override

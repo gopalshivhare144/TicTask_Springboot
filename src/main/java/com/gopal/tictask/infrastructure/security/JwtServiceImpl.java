@@ -22,8 +22,10 @@ public class JwtServiceImpl implements TokenServicePort {
 
     @Override
     public String generateToken(User user) {
+        System.out.println("UserId issue impl" + user.getId());
         return Jwts.builder()
                 .setSubject(user.getEmail())
+                .claim("id", user.getId())  
                 .claim("role", user.getRoles().name())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -34,6 +36,15 @@ public class JwtServiceImpl implements TokenServicePort {
     @Override
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
+    }
+
+    @Override
+    public Long extractUserId(String token) {
+        Object value = getClaims(token).get("id");
+        if (value instanceof Number) {
+            return ((Number) value).longValue();
+        }
+        return null;
     }
 
     @Override
@@ -53,4 +64,10 @@ public class JwtServiceImpl implements TokenServicePort {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String extractRole(String token) {
+        return getClaims(token).get("role", String.class);
+    }
+
+
 }
