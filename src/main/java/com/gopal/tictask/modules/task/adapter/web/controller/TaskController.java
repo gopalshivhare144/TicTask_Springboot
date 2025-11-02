@@ -42,6 +42,7 @@ public class TaskController {
                         @Valid @RequestBody TaskRequestDto request) {
                                 
                 Task updated = taskService.updateTask(id, taskWebMapper.toDomain(request));
+                System.out.println("updated value "+updated);
                 TaskResponseDto response = taskWebMapper.toResponseDto(updated);
                 return ResponseEntity.status(HttpStatus.OK)
                                 .body(ApiResponse.success("Task updated successfully", response));

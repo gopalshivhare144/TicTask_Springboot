@@ -25,8 +25,6 @@ import com.gopal.tictask.modules.habit.application.port.inbound.HabitUseCase;
 import com.gopal.tictask.modules.habit.domain.model.Habit;
 import com.gopal.tictask.shared.api.ApiResponse;
 import com.gopal.tictask.shared.holder.UserContextHolder;
-
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController

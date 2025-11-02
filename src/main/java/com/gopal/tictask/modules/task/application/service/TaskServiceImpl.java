@@ -59,6 +59,7 @@ public class TaskServiceImpl implements TaskUseCase {
         existing.setDescription(task.getDescription());
         existing.setCompleted(task.isCompleted());
         existing.setPriority(task.getPriority());
+        existing.setTaskDate(task.getTaskDate());
         return taskRepositoryPort.save(existing);
     }
 
